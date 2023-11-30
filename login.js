@@ -92,7 +92,7 @@ function createCard(data, year) {
         <div class="row">
             <div class="col-md-6">
                 <b>• Theater</b><br>
-                ${(data.theater.topSetlists.length != 0) ? `
+                ${(data.theater.topSetlists) ? `
                 <b>Top Setlists:</b><br>${Array.isArray(topSetlists) ? topSetlists.join('<br>') : topSetlists}<br><br>
                 <div class="mobile-spacing">
                     <b>🏆 Winrate:</b> ${data.theater.winrate.rate}<br>(<b>Menang:</b> ${data.theater.winrate.detail.menang}x, <b>Kalah:</b> ${data.theater.winrate.detail.kalah}x)
@@ -109,7 +109,9 @@ function createCard(data, year) {
         </div><br>
         <div class="poppins-font">
             <b>• Events</b><br>
+            ${(data.events.lastEvents) ? `
             <b>Last Events:</b><br>${Array.isArray(data.events.lastEvents) ? data.events.lastEvents.map(event => `- ${event}`).join('<br>') : data.events}<br><br>
+            ` : data.events+"<br><br>"}
             <b>Total Top-Up:</b><br>${data.topUp}<br><br>
             <center><small><b>#JKT48Wrapped made with ❤️ by JKT48 Live</b></small></center>
         </div>
