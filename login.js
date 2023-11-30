@@ -68,22 +68,33 @@ function toggleTopUpVisibility() {
     }
 }
 
+function ensureThreeEntries(array) {
+    while (array.length < 3) {
+        array.push("-");
+    }
+    return array;
+}
+
 function createCard(data, year) {
     const cardBody = document.querySelector('.card-body');
+
+    let topSetlists = Array.isArray(data.theater.topSetlists) ? ensureThreeEntries([...data.theater.topSetlists]) : [data.theater.topSetlists];
+    let topVCMembers = Array.isArray(data.videoCall.topMembers) ? ensureThreeEntries([...data.videoCall.topMembers]) : [data.videoCall.topMembers];
+    let imgProxy = "https://api.codetabs.com/v1/proxy/?quest=";
     cardBody.innerHTML = `
-        <h5 class="card-title text-center">JKT48 Wrapped ${year} (${data.name})</h5>
-        <center><img src="${data.oshiPic}" class="img-fluid"><br><b>Oshi:</b> ${data.oshi}</center><br>
+        <h5 class="card-title text-center">JKT48 Wrapped ${year} (${data.name})</h5><br>
+        <center><img src="${imgProxy}${encodeURIComponent(data.oshiPic)}" class="img-fluid"><br><b>Oshi:</b> ${data.oshi}</center><br>
         <div class="row">
             <div class="col-md-6">
                 <b>• Theater</b><br>
-                <b>Top Setlists:</b><br>${Array.isArray(data.theater.topSetlists) ? data.theater.topSetlists.join('<br>') : data.theater.topSetlists}<br><br>
+                <b>Top Setlists:</b><br>${Array.isArray(topSetlists) ? topSetlists.join('<br>') : topSetlists}<br><br>
                 <div class="mobile-spacing">
                     <b>🏆 Winrate:</b> ${data.theater.winrate.rate}<br>(<b>Menang:</b> ${data.theater.winrate.detail.menang}x, <b>Kalah:</b> ${data.theater.winrate.detail.kalah}x)
                 </div>
             </div>
             <div class="col-md-6">
                 <b>• Video Call</b><br>
-                <b>Top Video Call Members:</b><br>${Array.isArray(data.videoCall.topMembers) ? data.videoCall.topMembers.join('<br>') : data.videoCall.topMembers}<br><br>
+                <b>Top Video Call Members:</b><br>${Array.isArray(topVCMembers) ? topVCMembers.join('<br>') : topVCMembers}<br><br>
                 <b>Total Video Call:</b><br>${data.videoCall.totalTickets} tiket
             </div>
         </div><br>
@@ -125,7 +136,7 @@ function fetchData(cookie, year) {
 
 function createCanvasFromCard() {
     const cardBody = document.querySelector('.card-body');
-    html2canvas(cardBody, { useCORS: true }).then(canvas => {
+    html2canvas(cardBody, { useCORS: true, scale: 1 }).then(canvas => {
         // Buat wrapper untuk tombol agar berada di tengah
         const buttonWrapper = document.createElement('div');
         buttonWrapper.classList.add('text-center');
