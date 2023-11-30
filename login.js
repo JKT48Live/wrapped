@@ -79,13 +79,16 @@ function ensureThreeEntries(array) {
 
 function createCard(data, year) {
     const cardBody = document.querySelector('.card-body');
-    cardBody.classList.add('poppins-font');
+    //cardBody.classList.add('poppins-font');
     let topSetlists = Array.isArray(data.theater.topSetlists) ? ensureThreeEntries([...data.theater.topSetlists]) : [data.theater.topSetlists];
     let topVCMembers = Array.isArray(data.videoCall.topMembers) ? ensureThreeEntries([...data.videoCall.topMembers]) : [data.videoCall.topMembers];
     let imgProxy = "https://api.codetabs.com/v1/proxy/?quest=";
     cardBody.innerHTML = `
-        <h5 class="card-title text-center">JKT48 Wrapped ${year} (${data.name})</h5><br>
-        <center><img src="${imgProxy}${encodeURIComponent(data.oshiPic)}" width="50%" height="50%" class="img-fluid"><br><b>Oshi:</b> ${data.oshi}</center><br>
+        <h5 class="card-title text-center poppins-font">JKT48 Wrapped ${year} (${data.name})</h5><br>
+        <center>
+            <img src="${imgProxy}${encodeURIComponent(data.oshiPic)}" width="50%" class="img-fluid rounded-image"><br>
+            <p class="poppins-font"><b>Oshi:</b> ${data.oshi}</p>
+        </center><br>
         <div class="row">
             <div class="col-md-6">
                 <b>• Theater</b><br>
@@ -104,10 +107,12 @@ function createCard(data, year) {
                 ` : data.videoCall}
             </div>
         </div><br>
-        <b>• Events</b><br>
-        <b>Last Events:</b><br>${Array.isArray(data.events.lastEvents) ? data.events.lastEvents.map(event => `- ${event}`).join('<br>') : data.events}<br><br>
-        <b>Total Top-Up:</b><br>${data.topUp}<br><br>
-        <center><small><b>#JKT48Wrapped made with ❤️ by JKT48 Live</b></small></center>
+        <div class="poppins-font">
+            <b>• Events</b><br>
+            <b>Last Events:</b><br>${Array.isArray(data.events.lastEvents) ? data.events.lastEvents.map(event => `- ${event}`).join('<br>') : data.events}<br><br>
+            <b>Total Top-Up:</b><br>${data.topUp}<br><br>
+            <center><small><b>#JKT48Wrapped made with ❤️ by JKT48 Live</b></small></center>
+        </div>
     `;
 }
 
