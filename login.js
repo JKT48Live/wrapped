@@ -87,15 +87,19 @@ function createCard(data, year) {
         <div class="row">
             <div class="col-md-6">
                 <b>• Theater</b><br>
+                ${(data.theater.topSetlists.length != 0) ? `
                 <b>Top Setlists:</b><br>${Array.isArray(topSetlists) ? topSetlists.join('<br>') : topSetlists}<br><br>
                 <div class="mobile-spacing">
                     <b>🏆 Winrate:</b> ${data.theater.winrate.rate}<br>(<b>Menang:</b> ${data.theater.winrate.detail.menang}x, <b>Kalah:</b> ${data.theater.winrate.detail.kalah}x)
                 </div>
+                ` : data.theater}
             </div>
             <div class="col-md-6">
                 <b>• Video Call</b><br>
+                ${(data.videoCall.totalTickets) ? `
                 <b>Top Video Call Members:</b><br>${Array.isArray(topVCMembers) ? topVCMembers.join('<br>') : topVCMembers}<br><br>
-                <b>Total Video Call:</b><br>${data.videoCall.totalTickets} tiket
+                <b>Total Video Call:</b><br>${(data.videoCall.totalTickets) ? `${data.videoCall.totalTickets} tiket` : data.videoCall} 
+                ` : data.videoCall}
             </div>
         </div><br>
         <b>• Events</b><br>
