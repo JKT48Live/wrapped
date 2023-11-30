@@ -31,11 +31,13 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
             buttonContainer.innerHTML = ''; // Bersihkan isi sebelumnya jika ada
     
             // Tambahkan header untuk tombol tahun
-            const header = document.createElement('h5');
+            const header = document.createElement('h2');
+            header.classList.add('vanta-font');
             header.textContent = 'JKT48 Wrapped';
             buttonContainer.appendChild(header);
 
             const subHeader = document.createElement('p');
+            subHeader.classList.add('vanta-font');
             subHeader.textContent = 'Pilih tahun';
             buttonContainer.appendChild(subHeader);
 
@@ -43,7 +45,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
             data.data.forEach(item => {
                 const btn = document.createElement('button');
                 btn.innerText = item.year;
-                btn.classList.add('btn', 'btn-primary', 'mr-2'); // Bootstrap classes
+                btn.classList.add('btn', 'btn-primary', 'mr-2', 'vanta-font'); // Bootstrap classes
                 btn.onclick = () => fetchData(item.cookie, item.year);
                 buttonContainer.appendChild(btn);
             });
@@ -77,13 +79,13 @@ function ensureThreeEntries(array) {
 
 function createCard(data, year) {
     const cardBody = document.querySelector('.card-body');
-
+    cardBody.classList.add('poppins-font');
     let topSetlists = Array.isArray(data.theater.topSetlists) ? ensureThreeEntries([...data.theater.topSetlists]) : [data.theater.topSetlists];
     let topVCMembers = Array.isArray(data.videoCall.topMembers) ? ensureThreeEntries([...data.videoCall.topMembers]) : [data.videoCall.topMembers];
     let imgProxy = "https://api.codetabs.com/v1/proxy/?quest=";
     cardBody.innerHTML = `
         <h5 class="card-title text-center">JKT48 Wrapped ${year} (${data.name})</h5><br>
-        <center><img src="${imgProxy}${encodeURIComponent(data.oshiPic)}" class="img-fluid"><br><b>Oshi:</b> ${data.oshi}</center><br>
+        <center><img src="${imgProxy}${encodeURIComponent(data.oshiPic)}" width="50%" height="50%" class="img-fluid"><br><b>Oshi:</b> ${data.oshi}</center><br>
         <div class="row">
             <div class="col-md-6">
                 <b>• Theater</b><br>
@@ -128,7 +130,7 @@ function fetchData(cookie, year) {
         loading.classList.add('hidden');
         if(data.success) {
             createCard(data.data, year); // Kirim year ke createCard
-            setTimeout(() => createCanvasFromCard(), 100);
+            //setTimeout(() => createCanvasFromCard(), 100);
         } else {
             alert('Gagal mengambil data: ' + data.message);
         }
@@ -138,7 +140,7 @@ function fetchData(cookie, year) {
     });
 }
 
-function createCanvasFromCard() {
+/*function createCanvasFromCard() {
     const cardBody = document.querySelector('.card-body');
     html2canvas(cardBody, { useCORS: true, scale: 1 }).then(canvas => {
         // Buat wrapper untuk tombol agar berada di tengah
@@ -165,4 +167,4 @@ function createCanvasFromCard() {
         // Tambahkan wrapper ke halaman, misalnya di bawah cardBody
         cardBody.appendChild(buttonWrapper);
     });
-}
+}*/
