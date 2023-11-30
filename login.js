@@ -3,6 +3,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const loading = document.getElementById('loading');
+    loading.classList.remove('hidden');
 
     fetch('https://jkt48.jnckmedia.com/wrap/login', {
         method: 'POST',
@@ -16,6 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(data => {
+        loading.classList.add('hidden');
         if(data.success) {
             alert('Login successful!');
     
@@ -92,6 +95,9 @@ function createCard(data, year) {
 }
 
 function fetchData(cookie, year) {
+    const loading = document.getElementById('loading');
+    loading.classList.remove('hidden');
+
     fetch('https://jkt48.jnckmedia.com/wrap/getData', {
         method: 'POST',
         headers: {
@@ -104,6 +110,7 @@ function fetchData(cookie, year) {
     })
     .then(response => response.json())
     .then(data => {
+        loading.classList.add('hidden');
         if(data.success) {
             createCard(data.data, year); // Kirim year ke createCard
             setTimeout(() => createCanvasFromCard(), 100);
