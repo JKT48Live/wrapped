@@ -137,7 +137,7 @@ function fetchData(cookie, year) {
         loading.classList.add('hidden');
         if(data.success) {
             createCard(data.data, year); // Kirim year ke createCard
-            //setTimeout(() => createCanvasFromCard(), 100);
+            setTimeout(() => createCanvasFromCard(), 100);
         } else {
             alert('Gagal mengambil data: ' + data.message);
         }
@@ -147,9 +147,17 @@ function fetchData(cookie, year) {
     });
 }
 
-/*function createCanvasFromCard() {
+function createCanvasFromCard() {
     const cardBody = document.querySelector('.card-body');
-    html2canvas(cardBody, { useCORS: true, scale: 1 }).then(canvas => {
+    html2canvas(document.body, { 
+        useCORS: true, 
+        scale: window.devicePixelRatio,
+        //scrollY: -window.scrollY,
+        width: 1200, // Lebar yang diinginkan, misalnya lebar layar PC
+        height: 961, // Tinggi yang diinginkan, misalnya tinggi layar PC
+        windowWidth: 1200, // Lebar window yang diinginkan
+        windowHeight: 961 // Tinggi window yang diinginkan 
+    }).then(canvas => {
         // Buat wrapper untuk tombol agar berada di tengah
         const buttonWrapper = document.createElement('div');
         buttonWrapper.classList.add('text-center');
@@ -157,7 +165,7 @@ function fetchData(cookie, year) {
         // Buat tombol untuk download
         const downloadBtn = document.createElement('button');
         downloadBtn.textContent = 'Download Image';
-        downloadBtn.classList.add('btn', 'btn-success', 'mt-3');
+        downloadBtn.classList.add('btn', 'btn-primary', 'mt-3');
 
         // Tambahkan event listener ke tombol untuk mendownload canvas sebagai gambar
         downloadBtn.addEventListener('click', function() {
@@ -174,4 +182,4 @@ function fetchData(cookie, year) {
         // Tambahkan wrapper ke halaman, misalnya di bawah cardBody
         cardBody.appendChild(buttonWrapper);
     });
-}*/
+}
